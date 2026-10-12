@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root, [data-theme='midnight'] {
+  --bg: #0b0f17; --panel: #131a26; --border: #243044; --text: #e6e9ef; --muted: #8b95a5; --accent: #3b82f6;
+}
+[data-theme='ocean'] {
+  --bg: #06161c; --panel: #0d2530; --border: #1b4252; --text: #e3f4f7; --muted: #7fa3ae; --accent: #14b8a6;
+}
+[data-theme='ember'] {
+  --bg: #170d0b; --panel: #241512; --border: #4a2a22; --text: #f7e9e4; --muted: #b0958c; --accent: #f97316;
+}
+
+html, body, #root { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; }
+input[type='range'] { accent-color: var(--accent); width: 100%; }
+select { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; width: 100%; }
