@@ -6,6 +6,7 @@ import {
   Download,
   Upload,
   Search,
+  FileCode,
 } from 'lucide-react'
 import {
   useParams,
@@ -13,6 +14,7 @@ import {
   PARAM_CATEGORIES,
   type ParamDef,
 } from '../stores/paramStore'
+import { JavaConfigExporter } from './JavaConfigExporter'
 
 // ─── Category color accents ─────────────────────────────────────────────────
 const CATEGORY_COLORS: Record<string, string> = {
@@ -205,6 +207,7 @@ function CategorySection({
 export function ParamPanel() {
   const { resetAll, importJSON, exportJSON, values } = useParams()
   const [query, setQuery] = useState('')
+  const [showJavaExporter, setShowJavaExporter] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
   const lq = query.toLowerCase().trim()
 
@@ -238,8 +241,16 @@ export function ParamPanel() {
       {/* Header toolbar */}
       <div className="flex items-center gap-1.5 px-3 py-2 border-b border-[var(--border)] shrink-0">
         <span className="text-[11px] font-bold text-[var(--accent)] uppercase tracking-wider flex-1">
-          190 Parameters
+          {PARAM_DEFS.length} Active Tuner Params
         </span>
+        <button
+          onClick={() => setShowJavaExporter(true)}
+          className="flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 hover:text-white hover:bg-cyan-500/25 transition font-bold"
+          title="Export to WPILib Java Code"
+        >
+          <FileCode size={11} />
+          <span>Export Java</span>
+        </button>
         {modifiedCount > 0 && (
           <span className="text-[9px] font-mono bg-amber-500/20 border border-amber-500/40 text-amber-400 px-1.5 py-0.5 rounded">
             {modifiedCount} modified
@@ -305,6 +316,12 @@ export function ParamPanel() {
           )
         })}
       </div>
+
+      {/* WPILib Java Config Exporter Modal */}
+      <JavaConfigExporter
+        isOpen={showJavaExporter}
+        onClose={() => setShowJavaExporter(false)}
+      />
     </div>
   )
 }

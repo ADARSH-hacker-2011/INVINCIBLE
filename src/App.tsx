@@ -9,6 +9,7 @@ import {
   Sparkles,
   ChevronRight,
   Zap,
+  FileCode,
 } from 'lucide-react'
 import Sim from './Sim'
 import { GROUNDS, useSim, type ThemeName } from './store'
@@ -20,6 +21,7 @@ import { MonteCarloRunner } from './components/MonteCarloRunner'
 import { DirectControlBridge } from './components/DirectControlBridge'
 import { AICopilotModal } from './components/AICopilotModal'
 import { HardwareSimulator } from './components/HardwareSimulator'
+import { JavaConfigExporter } from './components/JavaConfigExporter'
 
 // ─── Shared panel wrapper ───────────────────────────────────────────────────
 function Panel({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
@@ -111,7 +113,7 @@ function SimSidebar() {
   const sidePanels: { id: SidePanel; label: string; icon: ReactNode }[] = [
     { id: 'environment', label: 'Env', icon: <Globe2 size={11} /> },
     { id: 'robot', label: 'Robot', icon: <Bot size={11} /> },
-    { id: 'params', label: '190 Params', icon: <Cpu size={11} /> },
+    { id: 'params', label: 'Tuner', icon: <Cpu size={11} /> },
     { id: 'cad', label: 'CAD', icon: <ChevronRight size={11} /> },
   ]
 
@@ -230,6 +232,7 @@ export default function App() {
   const s = useSim()
   const [activeTab, setActiveTab] = useState<Tab>('sim')
   const [copilotOpen, setCopilotOpen] = useState<boolean>(false)
+  const [javaExporterOpen, setJavaExporterOpen] = useState<boolean>(false)
 
   useEffect(() => {
     document.documentElement.dataset.theme = s.theme
@@ -261,6 +264,16 @@ export default function App() {
           >
             <Sparkles size={12} className="text-cyan-400 animate-pulse" />
             <span>AI COPILOT</span>
+          </button>
+
+          {/* WPILib Java Config Exporter Launch Button */}
+          <button
+            onClick={() => setJavaExporterOpen(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 text-[11px] font-bold font-mono transition shadow-sm active:scale-95"
+            title="Export Tuned Swerve Configs to Official WPILib Java Code"
+          >
+            <FileCode size={12} className="text-emerald-400" />
+            <span>EXPORT JAVA</span>
           </button>
 
           {/* Tab buttons */}
@@ -487,6 +500,9 @@ export default function App() {
 
       {/* AI Copilot Interactive Reasoning Modal */}
       <AICopilotModal isOpen={copilotOpen} onClose={() => setCopilotOpen(false)} />
+
+      {/* WPILib Java Config Exporter Modal */}
+      <JavaConfigExporter isOpen={javaExporterOpen} onClose={() => setJavaExporterOpen(false)} />
 
       {/* ── Architecture Pipeline Flow Banner (from Turkey 2026 Mission Control) ── */}
       <footer className="h-8 border-t border-[var(--border)] bg-[#070A12] px-4 flex items-center justify-between shrink-0 text-[10px] font-mono z-20 overflow-x-auto">
