@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Zap,
   FileCode,
+  ListTodo,
 } from 'lucide-react'
 import Sim from './Sim'
 import { GROUNDS, useSim, type ThemeName } from './store'
@@ -22,6 +23,7 @@ import { DirectControlBridge } from './components/DirectControlBridge'
 import { AICopilotModal } from './components/AICopilotModal'
 import { HardwareSimulator } from './components/HardwareSimulator'
 import { JavaConfigExporter } from './components/JavaConfigExporter'
+import { RoadmapPanel } from './components/RoadmapPanel'
 
 // ─── Shared panel wrapper ───────────────────────────────────────────────────
 function Panel({ icon, title, children }: { icon: ReactNode; title: string; children: ReactNode }) {
@@ -233,6 +235,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('sim')
   const [copilotOpen, setCopilotOpen] = useState<boolean>(false)
   const [javaExporterOpen, setJavaExporterOpen] = useState<boolean>(false)
+  const [roadmapOpen, setRoadmapOpen] = useState<boolean>(false)
 
   useEffect(() => {
     document.documentElement.dataset.theme = s.theme
@@ -274,6 +277,16 @@ export default function App() {
           >
             <FileCode size={12} className="text-emerald-400" />
             <span>EXPORT JAVA</span>
+          </button>
+
+          {/* Pending Tasks & Roadmap Launch Button */}
+          <button
+            onClick={() => setRoadmapOpen(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-500/15 border border-purple-500/40 text-purple-300 hover:text-white hover:border-purple-400 text-[11px] font-bold font-mono transition shadow-sm active:scale-95"
+            title="View Roadmap & Track Pending Engineering Tasks"
+          >
+            <ListTodo size={12} className="text-purple-400" />
+            <span>ROADMAP & TASKS</span>
           </button>
 
           {/* Tab buttons */}
@@ -503,6 +516,9 @@ export default function App() {
 
       {/* WPILib Java Config Exporter Modal */}
       <JavaConfigExporter isOpen={javaExporterOpen} onClose={() => setJavaExporterOpen(false)} />
+
+      {/* Engineering Roadmap & Pending Tasks Modal */}
+      <RoadmapPanel isOpen={roadmapOpen} onClose={() => setRoadmapOpen(false)} />
 
       {/* ── Architecture Pipeline Flow Banner (from Turkey 2026 Mission Control) ── */}
       <footer className="h-8 border-t border-[var(--border)] bg-[#070A12] px-4 flex items-center justify-between shrink-0 text-[10px] font-mono z-20 overflow-x-auto">
