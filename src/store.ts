@@ -39,6 +39,7 @@ export interface SimParams {
   resetKey: number
   theme: ThemeName
   alliance: 'blue' | 'red'
+  eStop: boolean // Emergency stop — halts all robot motion immediately
 
   // Articulations
   elevatorHeight: number // 0 to 1.2 m
@@ -93,6 +94,7 @@ export const useSim = create<Store>((set) => ({
   resetKey: 0,
   theme: savedTheme,
   alliance: 'blue',
+  eStop: false,
 
   elevatorHeight: 0.0,
   intakeActive: false,

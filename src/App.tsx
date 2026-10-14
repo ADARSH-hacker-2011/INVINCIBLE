@@ -360,6 +360,20 @@ export default function App() {
             <RotateCcw size={13} />
             <span>Respawn</span>
           </button>
+
+          {/* E-Stop — always visible, always accessible */}
+          <button
+            onClick={() => s.set({ eStop: !s.eStop })}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded font-mono text-xs font-black uppercase tracking-widest border transition-all active:scale-95 ${
+              s.eStop
+                ? 'bg-red-600 text-white border-red-500 animate-pulse shadow-lg shadow-red-600/50'
+                : 'bg-red-600/10 text-red-400 border-red-600/40 hover:bg-red-600/25 hover:border-red-500 hover:text-red-300'
+            }`}
+            title={s.eStop ? 'E-Stop ACTIVE — click to resume' : 'Emergency Stop — halts all robot motion'}
+          >
+            <span className={`w-2 h-2 rounded-full ${s.eStop ? 'bg-white animate-ping' : 'bg-red-500'}`} />
+            {s.eStop ? '⚠ STOPPED' : 'E-STOP'}
+          </button>
         </div>
       </header>
 
