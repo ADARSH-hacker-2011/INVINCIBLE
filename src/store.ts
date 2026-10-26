@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { useParams } from './stores/paramStore'
 
 export type Drivetrain = 'swerve' | 'tank'
-export type ThemeName = 'midnight' | 'ocean' | 'ember'
+export type ThemeName = 'midnight' | 'ocean' | 'ember' | 'argos' | 'championship' | 'neon' | 'stealth'
 
 export interface GroundPreset {
   name: string
